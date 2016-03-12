@@ -1,0 +1,21 @@
+module Fruby
+  class Operation
+    module CallableParams
+      def call(*args)
+        Functions[:sanitize_as, self][*args]
+      end
+    end
+
+    module CallableSchema
+      def call(*args)
+        Functions[:validate_as, self][*args]
+      end
+    end
+
+    module CallableMapper
+      def call(*args)
+        Functions[:as_mapper, self][*args]
+      end
+    end
+  end
+end
