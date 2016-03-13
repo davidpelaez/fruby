@@ -4,7 +4,9 @@ module Fruby
 
       def json(model)
         res[Rack::CONTENT_TYPE] = "application/json; charset=utf-8"
-        model_with_meta = model.merge meta: metadata
+        model_meta = model.delete(:meta){|k| {} }
+        final_meta = model_meta.merge metadata
+        model_with_meta = model.merge meta: final_meta
         final_data = Functions[:prepare_for_json][model_with_meta]
         res.write Oj.dump(final_data)
       end
