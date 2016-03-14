@@ -8,7 +8,11 @@ module Fruby
 
       def parse_body
         body = req.body.read
-        inbox.merge! Oj.load(body) unless body.empty?
+        begin
+          inbox.merge! Oj.load(body) unless body.empty?
+        rescue Oj::ParseError => e
+          invalid_json_error
+        end
       end
 
       def parse_params
